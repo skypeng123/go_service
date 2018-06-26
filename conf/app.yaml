@@ -8,8 +8,13 @@ accounts: [{appid: 33efac4290daa8607cc5541c73b9a597, secret: 2c4518ae7270e7f5cd5
 
 #redis连接信息
 redis_host: 127.0.0.1:6379
-redis_auth: 
+redis_pwd: 
 redis_db: 0
+redis_maxidle: 100
+redis_maxactive: 200
+redis_idletimeout: 30
 
 #mysql连接信息 帐号：root 密码：alk3306% 主机：119.23.35.15 端口：3306 数据库：alkparking_mycat_db1
 mysql_dsn: root:alk3306%@tcp(119.23.35.15:3306)/alkparking_mycat_db1?parseTime=true
+mysql_maxidleconns: 100
+mysql_maxopenconns: 100
