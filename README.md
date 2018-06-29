@@ -11,21 +11,23 @@ golang+gin
 
 #### 安装教程
 
-go get gopkg.in/gin-gonic/gin.v1
-go get github.com/kardianos/govendor
-go get github.com/cihub/seelog
-go get github.com/go-yaml/yaml
-go get github.com/json-iterator/go
-go get github.com/pborman/uuid
-go get github.com/garyburd/redigo/redis
-go get github.com/go-sql-driver/mysql
+```
+go get -u github.com/kardianos/govendor
+
+cd $GOPATH/src
+git clone https://gitee.com/304269901/go_service.git
+cd go_service
+govendor sync
+go run main.go
+```
 
 
 #### 使用说明
 
 编译:
-
+```
 go build -tags=jsoniter .
+```
 
 
 
