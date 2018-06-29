@@ -11,7 +11,7 @@ import (
 
 func main() {
 
-	//读取配置
+	//加载配置
 	configFilePath := flag.String("C", "conf/app.yaml", "config file path")
 	logConfigPath := flag.String("L", "conf/seelog.xml", "log config file path")
 	flag.Parse()
@@ -35,7 +35,14 @@ func main() {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
+	//redis连接池初始化
 	helpers.InitRedis()
+	db, err := helpers.InitDB()
+	if err != nil {
+		seelog.Critical(err.Error())
+		return
+	}
+	defer db.Close()
 
 	r := routers.SetupRouter()
 	// Listen and Server in 0.0.0.0:8080

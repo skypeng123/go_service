@@ -1,6 +1,7 @@
 package services
 
 import (
+	"github.com/cihub/seelog"
 	"github.com/garyburd/redigo/redis"
 	"github.com/json-iterator/go"
 	"go_service/helpers"
@@ -15,17 +16,20 @@ type TokenInfo struct {
 
 type tokenCache struct {
 	Appid string `json:"appid"`
-	Time  int    `json:"time"`
+	Time  int64  `json:"time"`
 }
 
 var AppAccounts = map[string]string{
 	"33efac4290daa8607cc5541c73b9a597": "2c4518ae7270e7f5cd5b255a1f46e93b",
 }
 
-func GetToken(c *gin.Context) {
+func Token(c *gin.Context) {
 	//get request params
 	appid := c.PostForm("appid")
 	secret := c.PostForm("secret")
+
+	seelog.Debugf("请求参数 appid: %s,secret:%s", appid, secret)
+
 	if appid == "" || secret == "" {
 		c.JSON(http.StatusUnauthorized, gin.H{"code": 401, "msg": "unauthorized"})
 		return

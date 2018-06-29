@@ -11,21 +11,21 @@ var (
 	DB *sql.DB
 )
 
-func InitDb() {
-	var err error
-	DB, err = sql.Open("mysql", system.GetConfiguration().MysqlDSN)
+func InitDB() (*sql.DB, error) {
+	db, err := sql.Open("mysql", system.GetConfiguration().MysqlDSN)
 	if err != nil {
 		seelog.Critical(err.Error())
-		return
+		return nil, err
 	}
-	defer DB.Close()
 
-	DB.SetMaxIdleConns(system.GetConfiguration().MysqlMaxIdleConns)
-	DB.SetMaxOpenConns(system.GetConfiguration().MysqlMaxOpenConns)
+	DB = db
+	db.SetMaxIdleConns(system.GetConfiguration().MysqlMaxIdleConns)
+	db.SetMaxOpenConns(system.GetConfiguration().MysqlMaxOpenConns)
 
-	err = DB.Ping()
+	err = db.Ping()
 	if err != nil {
 		seelog.Critical(err.Error())
-		return
+		return nil, err
 	}
+	return db, err
 }

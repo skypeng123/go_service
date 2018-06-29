@@ -6,21 +6,28 @@ import (
 )
 
 func SetupRouter() *gin.Engine {
-	r := gin.Default()
+	//r := gin.Default()
+
+	r := gin.New()
+
+	r.Use(gin.Logger())
+
+	r.Use(gin.Recovery())
+
+	r.NoRoute(services.Handle404)
+
+	// Ping test
+	r.GET("/ping", services.Ping)
+
+	// 获取TOKEN
+	r.POST("/token", services.Token)
 
 	v1 := r.Group("/v1")
+	v1.Use(services.AuthRequired())
 	{
-		// Ping test
-		v1.GET("/ping", func(c *gin.Context) {
-			c.String(200, "pong")
-		})
-
-		// 获取TOKEN
-		v1.POST("/token", services.GetToken)
+		//收费计算
+		v1.POST("/charge", services.Charge)
 	}
-
-	// 收费计算
-	//r.POST("/charge", charge)
 
 	return r
 }
