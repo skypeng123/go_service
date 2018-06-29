@@ -15,7 +15,7 @@ golang+gin
 go get -u github.com/kardianos/govendor
 
 cd $GOPATH/src
-git clone https://gitee.com/304269901/go_service.git
+git clone https://github.com/skypeng123/go_service.git
 cd go_service
 govendor sync
 go run main.go
